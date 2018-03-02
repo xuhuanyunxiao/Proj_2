@@ -84,7 +84,7 @@ def descirbing_feature(feature_data):
                     index = name_list)
 
 #%% 
-def describe(data,fea_filename,fea_list = None, sam_filename = None):
+def describe(data,fea_filename,fea_list = None, sam_filename = None,data_rate = None):
     '''
     功能：1 描述 每个特征/字段 的信息，包括：'是否缺失样本', '缺失量', '缺失率','现存量',
              '缺失样本索引', '该特征含值的个数','值内容','值个数'
@@ -96,6 +96,7 @@ def describe(data,fea_filename,fea_list = None, sam_filename = None):
         feas_list: 选定的特征，如 ['年份','年级','性别']
         fea_filename: 描述特征的文件名，完整路径
         sam_filename: 描述选定特征频数的文件名，完整路径
+        data_rate：将data中的部分数据写入Excel，方便查看，行总数的比例，如0.1（1%）
     return: 
         写入Excel文件    
     '''
@@ -116,8 +117,10 @@ def describe(data,fea_filename,fea_list = None, sam_filename = None):
 #    prof.print_stats(sys.stdout)
     
     with pd.ExcelWriter(fea_filename) as writer:
-        total_desc.to_excel(writer,'整体描述')
+#        total_desc.to_excel(writer,'整体描述')
         single_fea_desc.to_excel(writer,'各个特征')
+        if data_rate:
+            data.iloc[:int(data.shape[0] * data_rate) + 1,:].to_excel(writer,'部分数据（' + str(data_rate) +')')
         writer.save()
  
     #  describe sample   
@@ -134,7 +137,8 @@ def describe(data,fea_filename,fea_list = None, sam_filename = None):
                     G_result = G_result.reset_index()
                     G_result.to_excel(writer,'-'.join(list(fea_name)))
                 writer.save()
-            
+    
+    return single_fea_desc
     t1 = time.time() - t0
     print('--------  描述数据.  ------')
     print('--------  耗时（s）：{:0.1f}  ------'.format(t1))

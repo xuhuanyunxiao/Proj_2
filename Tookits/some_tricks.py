@@ -142,6 +142,13 @@ if os.path.exists("python25"):
 
 
 
+
+#%% -----------------     datetime  ------------------
+import datetime as dt
+
+today = dt.datetime.now().strftime('%Y%m%d')
+
+
 #%% -----------------     MySQL  ----------------------
 from sqlalchemy import create_engine
 from pandas.io import sql

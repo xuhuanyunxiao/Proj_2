@@ -99,10 +99,6 @@ for index, sheet_name in enumerate(sheet_names):
         sheet_data = pd.read_excel(file_path, sheet_name, header = None)
 
 
-
-
-
-
 # ES表结构.xlsx
 file_path = os.path.join(data_folder, 'ES表结构.xlsx')
 excel = xlrd.open_workbook(file_path)
