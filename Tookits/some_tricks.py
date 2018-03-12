@@ -137,15 +137,14 @@ if os.path.exists("python25"):
 
 #%% -----------------     sys  ----------------------
 
-
-
+names = locals()
+names['%s' %table_n].to_csv(file_name, index = False, encoding = 'utf-8')
 
 
 
 
 #%% -----------------     datetime  ------------------
 import datetime as dt
-
 today = dt.datetime.now().strftime('%Y%m%d')
 
 
