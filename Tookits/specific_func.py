@@ -179,7 +179,7 @@ def get_txt_encode(file_path):
     Return:
         encode -> string -- txt文档的编码格式
     '''
-    decode_set = ['utf-8','gb18030','ISO-8859-2','gb2312','gbk'] # 编码集
+    decode_set = ['utf-8','gb18030','ISO-8859-2','gb2312','gbk', 'ANSI'] # 编码集
     encode = 0
     for k in decode_set:
         try :

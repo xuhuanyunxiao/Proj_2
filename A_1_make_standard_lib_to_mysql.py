@@ -154,14 +154,14 @@ with pd.ExcelWriter(result_folder + '\\企业登记注册类型.xlsx') as writer
 from sqlalchemy import create_engine
 from pandas.io import sql
 
-DB_CON_STR = 'mysql+pymysql://root:123456@localhost/standard_lib_mysql?charset=utf8'  
+DB_CON_STR = 'mysql+pymysql://root:123456@localhost/standard_lib_5_mysql?charset=utf8'  
 engine = create_engine(DB_CON_STR, echo=False) 
 
-sql.to_sql(symbol_area, 'city_symbol', engine, schema='standard_lib_mysql', if_exists='replace') 
-sql.to_sql(prov_dist_county, 'prov_dist_county_symbol', engine, schema='standard_lib_mysql', if_exists='replace') 
-sql.to_sql(economic_category_2017, 'economic_category_2017', engine, schema='standard_lib_mysql', if_exists='replace') 
-sql.to_sql(economic_category_2011, 'economic_category_2011', engine, schema='standard_lib_mysql', if_exists='replace') 
-sql.to_sql(company_type_2011, 'company_type_2011', engine, schema='standard_lib_mysql', if_exists='replace') 
+sql.to_sql(symbol_area, 'city_symbol', engine, schema='standard_lib_5_mysql', if_exists='replace') 
+sql.to_sql(prov_dist_county, 'prov_dist_county_symbol', engine, schema='standard_lib_5_mysql', if_exists='replace') 
+sql.to_sql(economic_category_2017, 'economic_category_2017', engine, schema='standard_lib_5_mysql', if_exists='replace') 
+sql.to_sql(economic_category_2011, 'economic_category_2011', engine, schema='standard_lib_5_mysql', if_exists='replace') 
+sql.to_sql(company_type_2011, 'company_type_2011', engine, schema='standard_lib_5_mysql', if_exists='replace') 
 
 #%%    
  

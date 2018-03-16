@@ -57,10 +57,10 @@ def get_additional_col(col_list):
         if col not in col_list:
             col_list.append(col)
     return col_list
-#%%
-#% 建立连接
+
+#%% 建立连接
 # MySQL
-DB_CON_STR = 'mysql+pymysql://root:123456@localhost/my_data?charset=utf8'  
+DB_CON_STR = 'mysql+pymysql://root:123456@localhost/standard_lib_mysql?charset=utf8'  
 engine = create_engine(DB_CON_STR, echo=False) 
 
 # Hive
@@ -295,6 +295,12 @@ ETL_business_info['province_name'] = ETL_business_info['company_area_code'].appl
 ETL_business_info['district_name'] = ETL_business_info['company_area_code'].apply(lambda x:get_area(str(x)[:4]))
 ETL_business_info['county_name'] = ETL_business_info['company_area_code'].apply(lambda x:get_area(str(x)[:6]))
 
+#%%
+DB_CON_STR = 'mysql+pymysql://root:123456@localhost/etl_data_mysql?charset=utf8'  
+engine = create_engine(DB_CON_STR, echo=False) 
+
+sql.to_sql(ETL_business_info, table_name, 
+           engine, schema='etl_data_mysql', if_exists='replace') 
 #%% 基本联系信息：company_base_contact_info_new
 database_name = 'data_hub_new'
 cursor.execute("use "+ database_name) 
@@ -396,11 +402,14 @@ ETL_contact_info['company_kind'] = ETL_contact_info['company_company_size'].appl
 ETL_contact_info['people_number'] = ETL_contact_info['company_company_size'].apply(get_company_size)
 ETL_contact_info = ETL_contact_info.drop('company_company_size', axis = 1)
 
+sql.to_sql(ETL_contact_info, table_name, 
+           engine, schema='etl_data_mysql', if_exists='replace') 
+
 #% 合并工商基本信息和基本联系信息
 ETL_base_business_contact_info = pd.merge(ETL_business_info, ETL_contact_info,
                                          on = 'chanle_id', how = 'left')
 sql.to_sql(ETL_base_business_contact_info, 'ETL_base_business_contact_info', 
-           engine, schema='my_data', if_exists='replace') 
+           engine, schema='etl_data_mysql', if_exists='replace') 
 
 #%% 工商变更数据
 # 从hive上取数据
@@ -431,6 +440,8 @@ data_size.append(['2 提取有用字段', ETL_busines_change.shape])
 ETL_busines_change = ETL_busines_change[ETL_busines_change['chanle_id'].notnull()]
 data_size.append(["3 id 不为空", ETL_busines_change.shape])
 
+sql.to_sql(ETL_contact_info, table_name, 
+           engine, schema='etl_data_mysql', if_exists='replace') 
 
 #%% 法律诉讼数据
 # 从hive上取数据
