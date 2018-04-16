@@ -98,7 +98,29 @@ use national_school; # 使用某个database
 show tables; # 查看database中表的名称
 use demand_ques; # 使用某个表
 
+-- 1) Mysql语法顺序，即当sql中存在下面的关键字时，它们要保持这样的顺序：
+select[distinct]  
+from  
+join（如left join）  
+on  
+where  
+group by  
+having  
+union  
+order by  
+limit  
 
+-- 2) Mysql执行顺序，即在执行时sql按照下面的顺序进行执行：
+from  
+on  
+join  
+where  
+group by  
+having  
+select  
+distinct  
+union  
+order by  
 
 ## ############  4 表
 # 建表

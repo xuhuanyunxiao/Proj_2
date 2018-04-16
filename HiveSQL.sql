@@ -92,6 +92,7 @@ ALTER TABLE hive_sql_rename SET TBLPROPERTIES('comment' = '修改后的表名');
 -- 改变列名、数据类型、注释、列位置或者它们的任意组合
 ALTER TABLE hive_sql_rename CHANGE company_name company_n STRING AFTER chanle_id;  -- 修改列名，并放在chanle_id后面
 ALTER TABLE hive_sql_rename CHANGE company_name company_n STRING FIRST;  -- 修改列名，并放在首列
+alter table odm_company_base_business_merge CHANGE COLUMN company_name company_name STRING comment '公司名';  -- 修改字段注释
 
 -- ADD是代表新增一字段，字段位置在所有列后面(partition列前)
 ALTER TABLE hive_sql_rename ADD COLUMNS (company_email INT COMMENT '公司邮箱');

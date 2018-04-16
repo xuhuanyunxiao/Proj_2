@@ -59,9 +59,31 @@ with pd.ExcelWriter(data_folder + '\\try_data.xlsx') as writer:
     pd.DataFrame(try_data).to_excel(writer)
     writer.save() 
 
+import xlrd
+from xlutils.copy import copy as xl_copy
+from win32com.client import Dispatch
+
+excel = xlrd.open_workbook(currentPath)
+sheet_names = [sheet.name for sheet in excel.sheets()]
 
 
-
+def write_null(filename):     
+    '''
+    有些Excel文件必须先打开，修改点什么，例如增加一个空表，才能被读取。
+    增加一个空表，但只能针对扩展名为 .xls 的文件
+    '''    
+    xlApp = Dispatch('Excel.Application')
+    xlApp.Visible = False
+    xlApp.Workbooks.Open(filename) 
+    sheet_name = [i.Name for i in xlApp.Worksheets]
+    xlApp.Quit() 
+    if 'null_value' not in sheet_name:  
+        xlApp = Dispatch('Excel.Application')
+        xlApp.Visible = False
+        xlApp.Workbooks.Open(filename) 
+        xlApp.Worksheets.Add().Name = 'null_value'
+        xlApp.ActiveWorkbook.Save()
+        xlApp.Quit() 
 
 #%% -----------------     BeautifulSoup、urllib  ----------------------
 # 网络：获取六级城市群名称
@@ -96,6 +118,9 @@ place_name = soup.find_all('p',attrs={'class':'MsoNormal'})
 place_n = [p.get_text().split(' ') for p in place_name]
 place = pd.DataFrame(place_n, columns = ['symbol','name']).applymap(lambda x: str(x).strip())
 
+
+
+
 #%% -----------------     os  ----------------------
 os.listdir(r'c:\windows')
 os.getcwd() # 当前工作目录
@@ -105,35 +130,35 @@ os.__file__  # D:\envs\py27\lib\os.pyc
 os.rename("python26","python21") 
 shutil.move("python21","python20") 
 
-os.path.dirname(os.__file__) # 获取路径名
-os.path.basename(os.__file__) # 获取文件名
-os.path.abspath(os.__file__) # 获得绝对路径
-os.path.realpath(os.__file__) #  获取相对路径
+os.path.dirname(os.__file__) # 获取路径名  D:\software\Anaconda3\envs\py27\lib
+os.path.basename(os.__file__) # 获取文件名  os.pyc
+os.path.abspath(os.__file__) # 获得绝对路径   D:\software\Anaconda3\envs\py27\lib\os.pyc
+os.path.realpath(os.__file__) #  获取相对路径   D:\software\Anaconda3\envs\py27\lib\os.pyc
 os.path.exists('D:\envs\py27\lib') # 路径是否真地存在
 os.path.isfile('D:\envs\py27\lib\os.pyc') # 路径是否是一个文件
 os.path.isdir('D:\envs\py27\lib') # 路径是否是一个目录
 os.path.isabs('D:\envs\py27\lib') # 判断是否是绝对路径
 
-# 创建单个目录 
+
 if not os.path.exists("python27"):
-    os.mkdir("python27")   
-
-# 创建多级目录 
+    os.mkdir("python27")    # 创建单个目录 
 if not os.path.exists("python26"):
-    os.makedirs(r'python26\test') 
-
-# 只能删除空目录
+    os.makedirs(r'python26\test') # 创建多级目录 
 if os.path.exists("python27"):
-    os.rmdir("python27") 
-
-# 删除多个目录    
+    os.rmdir("python27")    # 只能删除空目录
 if os.path.exists("python26"):
-    os.removedirs(r'python26\test') 
-
+    os.removedirs(r'python26\test')   # 删除多个目录    
 # 空目录、有内容的目录都可以删 。  
 # 递归删除一个目录以及目录内的所有内容
 if os.path.exists("python25"):
     shutil.rmtree("python25") 
+
+os.path.split('D:\software\Anaconda3\envs\py27\lib') # 分离目录名
+os.path.split('D:\software\Anaconda3\envs\py27\lib\os.pyc') # 分离文件名 
+os.path.splitext('D:\software\Anaconda3\envs\py27\lib\os.pyc') # 分离扩展名
+os.path.splitdrive('D:\software\Anaconda3\envs\py27\lib\os.pyc')  #分离磁盘驱动器
+os.path.join("D:\software\Anaconda3\envs\py27\lib","os.pyc")  # 连接目录与文件名或目录
+
 
 #%% -----------------     sys  ----------------------
 
@@ -348,6 +373,20 @@ def sta_plot(data,xlabel,g,fea_name,value_name,title,filename):
     plt.savefig(filename, bbox_inches='tight')
     plt.show()    
 
-#%% -----------------     matplotlib  ----------------------
+#%% -----------------     scikit learn  ----------------------
+#%%
+from sklearn.datasets import load_iris
+#加载数据集
+iris=load_iris()
+iris.keys()
+#dict_keys(['target', 'DESCR', 'data', 'target_names', 'feature_names'])
+#数据的条数和维数
+n_samples,n_features=iris.data.shape
+print("Number of sample:",n_samples)  
+#Number of sample: 150
+print("Number of feature",n_features)
+#Number of feature 4
+
+
 
 
