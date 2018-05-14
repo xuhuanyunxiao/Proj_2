@@ -7,6 +7,9 @@ Created on Thu Oct 19 10:49:30 2017
 
 #%% -----------------     pandas  ----------------------
 import pandas as pd
+
+company_regis_capital.info(memory_usage = 'deep') # 准确内存大小
+
 # 分割DataFrame中的某列数据
 users_data = pd.DataFrame((str(x).split('::') for x in pd.DataFrame(users).iloc[:,0]),
                           columns = 'UserID::Gender::Age::Occupation::Zip-code'.split('::'))
@@ -165,8 +168,33 @@ os.path.join("D:\software\Anaconda3\envs\py27\lib","os.pyc")  # 连接目录与�
 names = locals()
 names['%s' %table_n].to_csv(file_name, index = False, encoding = 'utf-8')
 
+#%% --- 
+import os,sys
+
+if __name__=="__main__":
+
+    print( "__file__=%s" % __file__)
+    print( "os.path.realpath(__file__)=%s" % os.path.realpath(__file__))
+    
+    print( "os.path.dirname(os.path.realpath(__file__))=%s" % os.path.dirname(os.path.realpath(__file__)))
+    
+    print( "os.path.split(os.path.realpath(__file__))=%s" % os.path.split(os.path.realpath(__file__))[0])
+    print( "os.path.abspath(__file__)=%s" % os.path.abspath(__file__))
+    print( "os.getcwd()=%s" % os.getcwd())
+    print( "sys.path[0]=%s" % sys.path[0])
+    print( "sys.argv[0]=%s" % sys.argv[0])
 
 
+#__file__=D:/XH/win_to_centos7/proj_3_score/package/test2.py
+#os.path.realpath(__file__)=D:\XH\win_to_centos7\proj_3_score\package\test2.py
+#os.path.dirname(os.path.realpath(__file__))=D:\XH\win_to_centos7\proj_3_score\package
+#os.path.split(os.path.realpath(__file__))=D:\XH\win_to_centos7\proj_3_score\package
+#os.path.abspath(__file__)=D:\XH\win_to_centos7\proj_3_score\package\test2.py
+#os.getcwd()=D:\XH\win_to_centos7\proj_3_score\package
+#sys.path[0]=
+#sys.argv[0]=D:/XH/win_to_centos7/proj_3_score/package/test2.py
+
+#%% --- 
 
 #%% -----------------     datetime  ------------------
 import datetime as dt

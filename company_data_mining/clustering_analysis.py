@@ -126,7 +126,9 @@ print('time is %d seconds ' % (end - begin))
 #%%
 
 
+import xgboost as xgb
 
+xgb.plot_importance()
 
 
 
