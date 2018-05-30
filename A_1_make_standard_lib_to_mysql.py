@@ -70,6 +70,10 @@ place_matrix['district_name'][place_matrix['district_name'] =='市辖区'] = \
 place_matrix['province_name'][place_matrix['district_name'] =='市辖区'] + '_' + \
 place_matrix['district_name'][place_matrix['district_name'] =='市辖区'] 
 
+place_matrix['district_name'][place_matrix['district_name'] =='省直辖县级行政区划'] = \
+place_matrix['province_name'][place_matrix['district_name'] =='省直辖县级行政区划'] + '_' + \
+place_matrix['district_name'][place_matrix['district_name'] =='省直辖县级行政区划'] 
+
 prov_dist_county = place_matrix[['province_symbol', 'district_symbol','county_symbol',
                                  'province_name','district_name','county_name']]
 #
